@@ -1,0 +1,48 @@
+---
+import ArticleGrid from '../../components/ArticleGrid.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { SITE_NAME } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCategoryCounts, getPublishedArticles } from '../../lib/articles';
+
+const articles = await getPublishedArticles();
+const categoryCounts = getCategoryCounts(articles);
+---
+
+<BaseLayout
+	title={`Artigos | ${SITE_NAME}`}
+	description="Todos os artigos e curadorias de produtos para casa publicados no CasaBoa."
+>
+	<section class="page-section">
+		<div class="container">
+			<header class="page-header">
+				<span class="section-eyebrow">Acervo editorial</span>
+				<h1>Todos os artigos</h1>
+				<p class="page-lead">
+					Guias práticos e seleções cuidadosas para tornar cada ambiente da casa mais leve,
+					confortável e funcional.
+				</p>
+			</header>
+
+			<CategoryFilter counts={categoryCounts} basePath="/artigos/" />
+			<ArticleGrid articles={articles} />
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-section {
+		padding-top: clamp(2.25rem, 4.5vw, 3.5rem);
+	}
+
+	.page-header {
+		max-width: 640px;
+		margin-bottom: 2.25rem;
+	}
+
+	.page-lead {
+		font-size: 1.05rem;
+		color: var(--color-ink-soft);
+		margin: 0;
+	}
+</style>

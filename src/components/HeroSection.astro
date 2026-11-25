@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { SITE_DESCRIPTION, SITE_TAGLINE } from '../consts';
+
+interface Props {
+	headline?: string;
+	subtitle?: string;
+	image: ImageMetadata;
+	imageAlt: string;
+}
+
+const {
+	headline = SITE_TAGLINE,
+	subtitle = SITE_DESCRIPTION,
+	image,
+	imageAlt,
+} = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-headline">
+	<div class="container hero-grid">
+		<div class="hero-content">
+			<span class="hero-eyebrow">Curadoria para o lar</span>
+			<h1 id="hero-headline" class="hero-title">{headline}</h1>
+			<p class="hero-subtitle">{subtitle}</p>
+			<div class="hero-actions">
+				<a href="#artigos" class="hero-link">Explorar artigos</a>
+				<a href="/categorias/" class="hero-link-secondary">Ver categorias</a>
+			</div>
+		</div>
+
+		<figure class="hero-media">
+			<Image
+				src={image}
+				alt={imageAlt}
+				width={920}
+				height={640}
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</figure>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding-block: clamp(2rem, 4.5vw, 3.75rem);
+		border-bottom: 1px solid var(--color-border);
+		background: linear-gradient(180deg, var(--color-bg) 0%, rgba(232, 225, 215, 0.25) 100%);
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1.05fr 0.95fr;
+		align-items: center;
+		gap: clamp(1.75rem, 4vw, 3.5rem);
+	}
+
+	.hero-content {
+		max-width: 540px;
+	}
+
+	.hero-eyebrow {
+		display: inline-block;
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-olive);
+		margin-bottom: 0.9rem;
+	}
+
+	.hero-title {
+		font-size: clamp(2.1rem, 4vw, 3.1rem);
+		line-height: 1.13;
+		margin-bottom: 1.1rem;
+		color: var(--color-ink);
+	}
+
+	.hero-subtitle {
+		font-size: clamp(1rem, 1.35vw, 1.125rem);
+		line-height: 1.68;
+		color: var(--color-ink-soft);
+		margin-bottom: 1.65rem;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem 1.5rem;
+	}
+
+	.hero-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.72rem 1.45rem;
+		background-color: var(--color-ink);
+		color: var(--color-bg);
+		font-size: 0.9rem;
+		font-weight: 500;
+		text-decoration: none;
+		border-radius: var(--radius-pill);
+		transition:
+			background-color var(--transition-base),
+			transform var(--transition-base);
+	}
+
+	.hero-link:hover {
+		background-color: var(--color-olive-dark);
+		color: var(--color-surface);
+		transform: translateY(-1px);
+	}
+
+	.hero-link-secondary {
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--color-ink-soft);
+		text-decoration: underline;
+		text-decoration-color: var(--color-border-strong);
+		text-underline-offset: 4px;
+	}
+
+	.hero-link-secondary:hover {
+		color: var(--color-olive-dark);
+		text-decoration-color: var(--color-olive);
+	}
+
+	.hero-media {
+		margin: 0;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-warm);
+		aspect-ratio: 16 / 11;
+	}
+
+	.hero-media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	@media (max-width: 900px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-content {
+			max-width: 100%;
+		}
+
+		.hero-media {
+			max-height: 380px;
+		}
+	}
+</style>

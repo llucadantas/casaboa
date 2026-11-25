@@ -1,0 +1,67 @@
+---
+import { getCategorySlug } from '../consts';
+
+interface Props {
+	category: string;
+	linked?: boolean;
+	variant?: 'olive' | 'beige';
+}
+
+const { category, linked = false, variant = 'olive' } = Astro.props;
+const href = `/categorias/${getCategorySlug(category)}/`;
+---
+
+{
+	linked ? (
+		<a href={href} class={`category-badge category-badge--${variant} is-link`}>
+			{category}
+		</a>
+	) : (
+		<span class={`category-badge category-badge--${variant}`}>{category}</span>
+	)
+}
+
+<style>
+	.category-badge {
+		display: inline-flex;
+		align-items: center;
+		font-family: var(--font-sans);
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		line-height: 1;
+		padding: 0.42rem 0.72rem;
+		border-radius: var(--radius-pill);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.category-badge--olive {
+		background-color: var(--color-olive-tint);
+		color: var(--color-olive-dark);
+	}
+
+	.category-badge--beige {
+		background-color: var(--color-surface-warm);
+		color: var(--color-ink-soft);
+		border: 1px solid var(--color-border);
+	}
+
+	.category-badge.is-link {
+		transition:
+			background-color var(--transition-base),
+			color var(--transition-base),
+			border-color var(--transition-base);
+	}
+
+	.category-badge--olive.is-link:hover {
+		background-color: var(--color-olive);
+		color: var(--color-surface);
+	}
+
+	.category-badge--beige.is-link:hover {
+		border-color: var(--color-olive);
+		color: var(--color-ink);
+	}
+</style>

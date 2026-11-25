@@ -1,0 +1,78 @@
+---
+import { SITE_DOMAIN, SITE_EMAIL, SITE_NAME } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title={`Política de Privacidade | ${SITE_NAME}`}
+	description="Política de privacidade, transparência editorial e uso de links externos no CasaBoa."
+>
+	<article class="legal-page">
+		<div class="container legal-inner">
+			<header class="legal-header">
+				<span class="section-eyebrow">Transparência</span>
+				<h1>Política de Privacidade e Afiliados</h1>
+				<p class="legal-updated">Última atualização: novembro de 2026</p>
+			</header>
+
+			<div class="prose">
+				<h2>1. Sobre o CasaBoa</h2>
+				<p>
+					O <strong>{SITE_NAME}</strong> ({SITE_DOMAIN}) é um blog editorial de curadoria
+					de produtos e ideias para casa. Não realizamos vendas diretas, não processamos
+					pagamentos e não solicitamos dados bancários dos visitantes.
+				</p>
+
+				<h2>2. Dados de navegação</h2>
+				<p>
+					Este site é construído de forma estática com foco em privacidade e carregamento
+					rápido. Caso métricas de audiência ou cookies funcionais venham a ser utilizados
+					no futuro, eles servirão apenas para compreender quais conteúdos são mais úteis
+					aos leitores, em conformidade com a Lei Geral de Proteção de Dados (LGPD).
+				</p>
+
+				<h2>3. Links externos e links de afiliados</h2>
+				<p>
+					Os artigos do CasaBoa podem apresentar links externos para lojas ou fabricantes
+					com o objetivo de facilitar que o leitor conheça as especificações ou adquira os
+					produtos recomendados.
+				</p>
+				<p>
+					Alguns desses links poderão ser links de afiliados. Isso significa que, caso você
+					opte por realizar uma compra após clicar em uma recomendação, o blog pode receber
+					uma pequena comissão — <strong>sem nenhum custo adicional para você</strong>. A
+					existência de eventuais parcerias não altera nossa independência editorial.
+				</p>
+
+				<h2>4. Contato</h2>
+				<p>
+					Para dúvidas sobre esta política ou solicitações relacionadas à privacidade,
+					entre em contato pelo e-mail{' '}
+					<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+				</p>
+			</div>
+		</div>
+	</article>
+</BaseLayout>
+
+<style>
+	.legal-page {
+		padding-top: clamp(2.25rem, 4.5vw, 3.75rem);
+	}
+
+	.legal-inner {
+		max-width: var(--prose-max);
+	}
+
+	.legal-header {
+		margin-bottom: 2rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.legal-updated {
+		font-size: 0.88rem;
+		color: var(--color-muted);
+		margin: 0;
+	}
+</style>

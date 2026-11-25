@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+	articles: CollectionEntry<'artigos'>[];
+	emptyMessage?: string;
+}
+
+const {
+	articles,
+	emptyMessage = 'Ainda não há artigos publicados nesta seção. Em breve teremos novas recomendações para a casa.',
+} = Astro.props;
+---
+
+{
+	articles.length > 0 ? (
+		<div class="article-grid">
+			{articles.map((article) => (
+				<ArticleCard article={article} />
+			))}
+		</div>
+	) : (
+		<div class="empty-state">
+			<p>{emptyMessage}</p>
+			<a href="/" class="empty-link">
+				Voltar para todos os artigos
+			</a>
+		</div>
+	)
+}
+
+<style>
+	.article-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.75rem;
+	}
+
+	.empty-state {
+		padding: 3rem 1.5rem;
+		text-align: center;
+		background-color: var(--color-surface);
+		border: 1px dashed var(--color-border-strong);
+		border-radius: var(--radius-md);
+	}
+
+	.empty-state p {
+		margin-bottom: 1rem;
+		color: var(--color-muted);
+	}
+
+	.empty-link {
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: var(--color-olive-dark);
+	}
+
+	@media (max-width: 1024px) {
+		.article-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1.5rem;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.article-grid {
+			grid-template-columns: 1fr;
+			gap: 1.35rem;
+		}
+	}
+</style>

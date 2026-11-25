@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+
+type ArticleProducts = NonNullable<CollectionEntry<'artigos'>['data']['products']>;
+
+interface Props {
+	products: ArticleProducts;
+	title?: string;
+	note?: string;
+}
+
+const {
+	products,
+	title = 'Curadoria apresentada neste artigo',
+	note = 'Links informados apenas para referência editorial e demonstração. Os preços podem variar conforme o fornecedor.',
+} = Astro.props;
+---
+
+{
+	products && products.length > 0 && (
+		<section class="recommendations" aria-labelledby="recommendations-heading">
+			<div class="recommendations-header">
+				<span class="section-eyebrow">Guia de escolhas</span>
+				<h2 id="recommendations-heading" class="recommendations-title">
+					{title}
+				</h2>
+				<p class="recommendations-note">{note}</p>
+			</div>
+
+			<div class="recommendations-list">
+				{products.map((product, index) => (
+					<ProductCard
+						name={product.name}
+						image={product.image}
+						imageAlt={product.imageAlt}
+						description={product.description}
+						url={product.url}
+						price={product.price}
+						highlight={product.highlight}
+						category={product.category}
+						index={index}
+					/>
+				))}
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.recommendations {
+		margin-top: 3.25rem;
+		padding-top: 2.5rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.recommendations-header {
+		margin-bottom: 1.75rem;
+	}
+
+	.recommendations-title {
+		margin-bottom: 0.45rem;
+	}
+
+	.recommendations-note {
+		font-size: 0.88rem;
+		color: var(--color-muted);
+		margin: 0;
+	}
+
+	.recommendations-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+	}
+</style>

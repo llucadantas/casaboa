@@ -1,0 +1,87 @@
+---
+import { SITE_EMAIL, SITE_NAME, SITE_TAGLINE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title={`Sobre o CasaBoa | ${SITE_NAME}`}
+	description="Conheça a proposta editorial do CasaBoa: curadoria honesta de produtos e ideias para construir uma casa confortável, organizada e agradável de viver."
+>
+	<article class="about-page">
+		<div class="container about-inner">
+			<header class="about-header">
+				<span class="section-eyebrow">Sobre o projeto</span>
+				<h1>{SITE_TAGLINE}</h1>
+				<p class="about-lead">
+					O CasaBoa nasceu da convicção de que uma casa não precisa ser luxuosa para ser
+					incrível — ela precisa ser confortável, funcional, bonita e gostosa de viver.
+				</p>
+			</header>
+
+			<div class="prose">
+				<h2>Por que fazemos esta curadoria</h2>
+				<p>
+					Escolher produtos para a casa costuma ser cansativo. Entre milhares de anúncios,
+					opções repetidas e especificações confusas, fica difícil saber o que realmente
+					melhora a rotina e o que apenas ocupa espaço no armário.
+				</p>
+				<p>
+					No <strong>CasaBoa</strong>, reunimos ideias práticas e recomendações editoriais
+					pensadas para o ritmo real de quem mora, trabalha e descansa no próprio espaço.
+					Cada artigo foca nos benefícios concretos: mais conforto térmico, iluminação
+					acolhedora, organização visual e funcionalidade duradoura.
+				</p>
+
+				<h2>Nossos critérios editoriais</h2>
+				<ul>
+					<li>
+						<strong>Utilidade real:</strong> priorizamos itens que resolvem incômodos
+						cotidianos com simplicidade.
+					</li>
+					<li>
+						<strong>Estética calma:</strong> objetos que conversam bem com ambientes
+						reais, sem excesso visual.
+					</li>
+					<li>
+						<strong>Manutenção simples:</strong> materiais fáceis de limpar, guardar e
+						conservar ao longo do tempo.
+					</li>
+					<li>
+						<strong>Transparência:</strong> não somos uma loja. Quando indicamos links
+						externos ou eventuais links de afiliados, informamos claramente ao leitor.
+					</li>
+				</ul>
+
+				<h2 id="contato">Contato</h2>
+				<p>
+					Tem alguma sugestão de tema, dúvida sobre um produto citado ou interesse em
+					parcerias editoriais alinhadas ao nosso propósito? Escreva para{' '}
+					<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+				</p>
+			</div>
+		</div>
+	</article>
+</BaseLayout>
+
+<style>
+	.about-page {
+		padding-top: clamp(2.25rem, 4.5vw, 3.75rem);
+	}
+
+	.about-inner {
+		max-width: var(--prose-max);
+	}
+
+	.about-header {
+		margin-bottom: 2.25rem;
+		padding-bottom: 1.75rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.about-lead {
+		font-size: 1.12rem;
+		line-height: 1.7;
+		color: var(--color-ink-soft);
+		margin: 0;
+	}
+</style>

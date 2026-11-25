@@ -1,0 +1,93 @@
+---
+import ArticleGrid from '../../components/ArticleGrid.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { CATEGORIES, SITE_NAME, type CategoryInfo } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+	filterArticlesByCategory,
+	getCategoryCounts,
+	getPublishedArticles,
+} from '../../lib/articles';
+
+export async function getStaticPaths() {
+	return CATEGORIES.map((category) => ({
+		params: { categoria: category.slug },
+		props: { category },
+	}));
+}
+
+interface Props {
+	category: CategoryInfo;
+}
+
+const { category } = Astro.props;
+const allArticles = await getPublishedArticles();
+const filteredArticles = filterArticlesByCategory(allArticles, category.slug);
+const counts = getCategoryCounts(allArticles);
+---
+
+<BaseLayout
+	title={`${category.name} | ${SITE_NAME}`}
+	description={category.description}
+>
+	<section class="page-section">
+		<div class="container">
+			<header class="page-header">
+				<nav class="breadcrumb" aria-label="Caminho de navegação">
+					<a href="/">Início</a>
+					<span aria-hidden="true">/</span>
+					<a href="/categorias/">Categorias</a>
+					<span aria-hidden="true">/</span>
+					<span>{category.name}</span>
+				</nav>
+
+				<span class="section-eyebrow">Categoria</span>
+				<h1>{category.name}</h1>
+				<p class="page-lead">{category.description}</p>
+			</header>
+
+			<CategoryFilter activeCategory={category.slug} counts={counts} />
+
+			<ArticleGrid
+				articles={filteredArticles}
+				emptyMessage={`Ainda não publicamos artigos exclusivos na categoria ${category.name}. Explore as demais categorias ou volte para a página inicial.`}
+			/>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-section {
+		padding-top: clamp(2.25rem, 4.5vw, 3.5rem);
+	}
+
+	.page-header {
+		max-width: 660px;
+		margin-bottom: 2.25rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.83rem;
+		color: var(--color-muted);
+		margin-bottom: 1rem;
+	}
+
+	.breadcrumb a {
+		color: var(--color-muted);
+		text-decoration: none;
+	}
+
+	.breadcrumb a:hover {
+		color: var(--color-olive-dark);
+		text-decoration: underline;
+	}
+
+	.page-lead {
+		font-size: 1.05rem;
+		color: var(--color-ink-soft);
+		margin: 0;
+	}
+</style>

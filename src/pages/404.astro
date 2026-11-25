@@ -1,0 +1,71 @@
+---
+import { SITE_NAME } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title={`Página não encontrada | ${SITE_NAME}`}
+	description="O endereço acessado não foi encontrado no CasaBoa."
+>
+	<section class="not-found">
+		<div class="container not-found-inner">
+			<span class="section-eyebrow">Erro 404</span>
+			<h1>Esta página mudou de lugar</h1>
+			<p>
+				Não encontramos o conteúdo que você procurou. Você pode voltar para a página
+				inicial ou navegar pelas nossas categorias.
+			</p>
+			<div class="not-found-actions">
+				<a href="/" class="btn-primary">Ir para o início</a>
+				<a href="/categorias/" class="btn-secondary">Ver categorias</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.not-found {
+		padding-block: clamp(4rem, 10vw, 7rem);
+	}
+
+	.not-found-inner {
+		max-width: 560px;
+		text-align: center;
+	}
+
+	.not-found-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+		margin-top: 1.75rem;
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		padding: 0.7rem 1.4rem;
+		background-color: var(--color-ink);
+		color: var(--color-bg);
+		border-radius: var(--radius-pill);
+		font-size: 0.9rem;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.btn-primary:hover {
+		background-color: var(--color-olive-dark);
+		color: var(--color-surface);
+	}
+
+	.btn-secondary {
+		display: inline-flex;
+		padding: 0.7rem 1.4rem;
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border-strong);
+		color: var(--color-ink);
+		border-radius: var(--radius-pill);
+		font-size: 0.9rem;
+		font-weight: 500;
+		text-decoration: none;
+	}
+</style>

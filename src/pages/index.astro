@@ -1,0 +1,67 @@
+---
+import heroHomeImage from '../assets/images/hero-home.png';
+import ArticleGrid from '../components/ArticleGrid.astro';
+import CategoryFilter from '../components/CategoryFilter.astro';
+import HeroSection from '../components/HeroSection.astro';
+import {
+	SITE_DESCRIPTION,
+	SITE_NAME,
+	SITE_TAGLINE,
+	SITE_TITLE,
+	SITE_URL,
+} from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCategoryCounts, getPublishedArticles } from '../lib/articles';
+
+const articles = await getPublishedArticles();
+const categoryCounts = getCategoryCounts(articles);
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: SITE_NAME,
+	alternateName: SITE_TAGLINE,
+	url: SITE_URL,
+	description: SITE_DESCRIPTION,
+	inLanguage: 'pt-BR',
+};
+---
+
+<BaseLayout
+	title={SITE_TITLE}
+	description={SITE_DESCRIPTION}
+	image={heroHomeImage}
+	imageAlt="Sala de estar iluminada com luz natural, sofá de linho claro e mesa de madeira"
+	structuredData={structuredData}
+>
+	<HeroSection
+		image={heroHomeImage}
+		imageAlt="Sala de estar serena e iluminada com sofá em linho claro, mesa de carvalho e vaso com ramos de oliveira"
+	/>
+
+	<section id="artigos" class="articles-section" aria-labelledby="articles-heading">
+		<div class="container">
+			<div class="section-header">
+				<div>
+					<span class="section-eyebrow">Edição atual</span>
+					<h2 id="articles-heading" class="section-title">
+						Artigos e curadorias
+					</h2>
+				</div>
+				<p class="section-subtitle">
+					Recomendações pensadas com calma para trazer aconchego, ordem e praticidade ao dia
+					a dia da casa.
+				</p>
+			</div>
+
+			<CategoryFilter counts={categoryCounts} />
+			<ArticleGrid articles={articles} />
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.articles-section {
+		padding-top: clamp(2.5rem, 5vw, 4rem);
+	}
+</style>

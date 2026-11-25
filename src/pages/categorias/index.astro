@@ -1,0 +1,142 @@
+---
+import { CATEGORIES, SITE_NAME } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCategoryCounts, getPublishedArticles } from '../../lib/articles';
+
+const articles = await getPublishedArticles();
+const counts = getCategoryCounts(articles);
+---
+
+<BaseLayout
+	title={`Categorias | ${SITE_NAME}`}
+	description="Explore as curadorias do CasaBoa por tema: conforto, organização, decoração, tecnologia, cozinha, limpeza, iluminação e climatização."
+>
+	<section class="page-section">
+		<div class="container">
+			<header class="page-header">
+				<span class="section-eyebrow">Navegue por tema</span>
+				<h1>Categorias</h1>
+				<p class="page-lead">
+					Organizamos nossas recomendações por área e necessidade da casa para facilitar a
+					busca pelo que realmente faz diferença no seu espaço.
+				</p>
+			</header>
+
+			<div class="categories-grid">
+				{
+					CATEGORIES.map((cat) => {
+						const count = counts[cat.name] ?? 0;
+						const labelCount =
+							count === 0
+								? 'Em breve'
+								: count === 1
+									? '1 artigo'
+									: `${count} artigos`;
+						return (
+							<a href={`/categorias/${cat.slug}/`} class="category-card">
+								<div class="category-card-top">
+									<h2>{cat.name}</h2>
+									<span class="category-count">{labelCount}</span>
+								</div>
+								<p>{cat.description}</p>
+								<span class="category-link">Explorar &rarr;</span>
+							</a>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-section {
+		padding-top: clamp(2.25rem, 4.5vw, 3.5rem);
+	}
+
+	.page-header {
+		max-width: 640px;
+		margin-bottom: 2.5rem;
+	}
+
+	.page-lead {
+		font-size: 1.05rem;
+		color: var(--color-ink-soft);
+		margin: 0;
+	}
+
+	.categories-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.category-card {
+		display: flex;
+		flex-direction: column;
+		padding: 1.6rem;
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		transition:
+			transform var(--transition-base),
+			border-color var(--transition-base),
+			box-shadow var(--transition-base);
+	}
+
+	.category-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--color-olive);
+		box-shadow: var(--shadow-card-hover);
+	}
+
+	.category-card-top {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 0.65rem;
+	}
+
+	.category-card h2 {
+		font-size: 1.35rem;
+		margin: 0;
+	}
+
+	.category-count {
+		font-size: 0.78rem;
+		font-weight: 600;
+		color: var(--color-olive-dark);
+		background-color: var(--color-olive-tint);
+		padding: 0.25rem 0.65rem;
+		border-radius: var(--radius-pill);
+		white-space: nowrap;
+	}
+
+	.category-card p {
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: var(--color-ink-soft);
+		margin-bottom: 1.25rem;
+		flex: 1 1 auto;
+	}
+
+	.category-link {
+		font-size: 0.86rem;
+		font-weight: 600;
+		color: var(--color-olive-dark);
+	}
+
+	@media (max-width: 1024px) {
+		.categories-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.categories-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
